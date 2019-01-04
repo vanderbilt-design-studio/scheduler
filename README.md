@@ -27,7 +27,7 @@ The problem at hand is to take the mentors availabilities and assign them each a
 The input to the problem is a graph G with two sets of vertices V1 (the mentors), V2 (the shifts).
 The only edges in the graph (mentor availabilities) are those between vertices in V1 and V2 -- there are no edges within the sets.
 Some relations in such a graph will include one-to-many, many-to-one, one-to-one, one-to-none, etc.
-The goal is to create the maximum number of pairs.
+The goal is to create the maximum number of pairs (fill the maximum number of shifts with the mentors we have).
 
 I formulate this as an integer program (IP)
 ```
