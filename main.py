@@ -1,7 +1,7 @@
 from typing import List, Dict
-import numpy as np
-import cvxpy as cp
 from itertools import chain
+
+import cvxpy as cp
 import pandas as pd
 
 doodle_df = pd.read_excel('Doodle.xls', skiprows=3, header=[0, 1, 2])
@@ -51,8 +51,7 @@ if problem.status in ["infeasible", "unbounded"]:
         f'The solver has found the problem to be {problem.status}. Your input may be incorrectly formatted.')
 else:
     print(
-        f'Shifts have been assigned with an optimal value of {round(problem.value)}')
-    print([round(float(variable.value)) for variable in problem.variables()])
+        f'Shifts have been assigned with an optimal assignment of {round(problem.value)}')
     out_df: Dict[str, str] = {}
     for i, (name, series) in enumerate(doodle_df.iterrows()):
         if name == 'Count':
@@ -64,6 +63,7 @@ else:
                 out_df[series.keys()[active_edge]] = [name]
     out_df = pd.DataFrame(out_df)
     out_df.to_excel('Schedule.xls')
+    print('They have been stored in Schedule.xls')
 
     
 
