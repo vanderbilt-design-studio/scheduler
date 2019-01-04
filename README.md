@@ -24,8 +24,8 @@ python3 main.py
 ### Theory
 The problem at hand is to take the mentors availabilities and assign them each a shift such that the number of shifts covered is maximized. It is reasonable to think of it as a maximum bipartite matching problem:
 
-The input to the problem is a graph G with two sets of vertices V1, V2.
-The only edges in the graph are those between vertices in V1 and V2 (there are no edges within the sets).
+The input to the problem is a graph G with two sets of vertices V1 (the mentors), V2 (the shifts).
+The only edges in the graph (mentor availabilities) are those between vertices in V1 and V2 -- there are no edges within the sets.
 Some relations in such a graph will include one-to-many, many-to-one, one-to-one, one-to-none, etc.
 The goal is to create the maximum number of pairs.
 
@@ -38,4 +38,4 @@ max IP sum(xe in E) // Maximize the number of matchings
 such that sum(xe for e in delta(v)) <= 1 // No vertex can have more than one adjacent edge
           xe binary
 ```
-Which can be extended to include weights on edges that should be selected first.
+Which can be extended to include weights on edges that should be selected first (or in the context of this problem, you could set delta(some shift) to be higher so that shift would be occupied first, or some edges in delta(mentor) to indicate which shift(s) the mentor would prefer to have.
