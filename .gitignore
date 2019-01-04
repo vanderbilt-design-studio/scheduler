@@ -102,3 +102,15 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+
+# Ignore output files
+Doodle.xls
+Schedule.xls
+
+# Ignore lock files
+.~lock*
+
+
+# Ignore .vscode
+.vscode/
