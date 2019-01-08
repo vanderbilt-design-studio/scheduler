@@ -1,8 +1,19 @@
-from typing import List, Dict
+from typing import List, Dict, Tuple
 from itertools import chain
+from collections import OrderedDict
 
 import cvxpy as cp
 import pandas as pd
+import datetime
+
+DOODLE_DATETIME_FORMAT = "('%B %Y', '%a %d', '%I:%M %p"
+OUTPUT_DATETIME_FORMAT = "%B %Y %a %d %I:%M %p"
+
+
+def parse_doodle_datetime(datetime_str: str) -> datetime.datetime:
+    datetime_str = datetime_str[:datetime_str.index(" –")]
+    return datetime.datetime.strptime(datetime_str, DOODLE_DATETIME_FORMAT)
+
 
 doodle_df = pd.read_excel('Doodle.xls', skiprows=3, header=[0, 1, 2])
 
@@ -52,18 +63,23 @@ if problem.status in ["infeasible", "unbounded"]:
 else:
     print(
         f'Shifts have been assigned with an optimal assignment of {round(problem.value)}')
-    out_df: Dict[str, str] = {}
+    assignments: List[Tuple[datetime.datetime, str]] = []
+
     for i, (name, series) in enumerate(doodle_df.iterrows()):
         if name == 'Count':
             break
-        
-        active_edges = [j for j in range(0, shifts) if round(float(edges[i][j].value)) == 1]
+
+        active_edges = [j for j in range(0, shifts) if round(
+            float(edges[i][j].value)) == 1]
         if len(active_edges) > 0:
             for active_edge in active_edges:
-                out_df[series.keys()[active_edge]] = [name]
-    out_df = pd.DataFrame(out_df)
+                shift_datetime_str = str(series.keys()[active_edge])
+                assignments.append((shift_datetime_str, name))
+    for key in series.keys():
+        if str(key) not in map(lambda assignment: assignment[0], assignments):
+            assignments.append((str(key), 'N/A'))
+    assignments = sorted(
+        assignments, key=lambda assignment: parse_doodle_datetime(assignment[0]))
+    out_df = pd.DataFrame.from_dict(list(assignments))
     out_df.to_excel('Schedule.xls')
     print('They have been stored in Schedule.xls')
-
-    
-
