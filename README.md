@@ -6,15 +6,15 @@ A Python 3 utility for taking Doodle poll responses and uniquely assigning them 
 git clone https://github.com/vanderbilt-design-studio/scheduler/
 virtualenv3 .venv
 source .venv/bin/activate
-pip3 install requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## Usage
 ```
 source .venv/bin/activate
-// MANUAL STEP: add Doodle.xls poll responses file to the folder
+# MANUAL STEP: add Doodle.xls poll responses file to the folder
 python3 main.py
-// MANUAL STEP: open the output Schedule.xls format, which will contain the shifts in no particular order
+# MANUAL STEP: open the output Schedule.xls format, which will contain the shifts ordered by date
 ```
 ## How it works
 ### Libraries used
@@ -39,3 +39,10 @@ such that sum(xe for e in delta(v)) <= 1 // No vertex can have more than one adj
           xe binary
 ```
 Which can be extended to include weights on edges that should be selected first (or in the context of this problem, you could set delta(some shift) to be higher so that shift would be occupied first, or some edges in delta(mentor) to indicate which shift(s) the mentor would prefer to have.
+
+## TODOs
+
+* [x] Support (OK) entries by weighting them half of "OK" in the objective function
+* [ ] Support shift weighting
+    * Can manually remove undesired shifts after first confirming an optimal assignment
+* [ ] Resilience-to-change scheduling: when shift assignments will be optimal anyways, try to assign shifts so that if one person's availability changes, the entire schedule is not shifted around 
