@@ -43,6 +43,8 @@ Which can be extended to include weights on edges that should be selected first 
 ## TODOs
 
 * [x] Support (OK) entries by weighting them half of "OK" in the objective function
+* [x] Support multiple mentors per shift
+    * [x] Barrier function for preferring >= 1 mentor per shift
 * [ ] Support shift weighting
     * Can manually remove undesired shifts after first confirming an optimal assignment
 * [ ] Resilience-to-change scheduling: when shift assignments will be optimal anyways, try to assign shifts so that if one person's availability changes, the entire schedule is not shifted around 

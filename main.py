@@ -73,7 +73,7 @@ for mentor_weighting, mentor_edges in zip(MENTORS_WEIGHTING, MENTORS_EDGES):
         OBJECTIVE += weighting * edge # Give priority to a mentor's preferences "(OK) = 1, OK = 2, NO = 0".
 
 for shift_edges in shifts_edges.values():
-    OBJECTIVE += -100 * cp.abs(cp.sum(shift_edges) - 1)
+    OBJECTIVE += -100 * cp.abs(cp.sum(shift_edges) - 1) # Prefer an assignment of 1 mentor to a shift over 0 or 2
 
 # Maximize the weighted mentor availability
 OBJECTIVE = cp.Maximize(OBJECTIVE)
